@@ -503,4 +503,64 @@
   // Initialize dropdowns
   populateDepartments();
   populateGradYearsAndBatches();
+  document.getElementById('registerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const role = document.querySelector('input[name="role"]:checked')?.value;
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const email = document.getElementById('email').value;
+    const department = document.getElementById('department').value;
+    const gradYear = document.getElementById('gradYear').value;
+    const batch = document.getElementById('batch').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const spinner = document.querySelector('.loading-spinner');
+
+    spinner.style.display = 'block';
+
+    try {
+      // Client-side validation
+      if (!role) throw new Error('Please select whether you are an Alumni or Student.');
+      if (!firstName || firstName.length < 2) throw new Error('First name must be at least 2 characters long.');
+      if (!lastName || lastName.length < 2) throw new Error('Last name must be at least 2 characters long.');
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error('Please enter a valid email address.');
+      if (!department) throw new Error('Please select a department.');
+      if (role === 'Alumni' && !gradYear) throw new Error('Please select a graduation year.');
+      if (role === 'Student' && !batch) throw new Error('Please select a batch.');
+      if (!password || password.length < 8) throw new Error('Password must be at least 8 characters long.');
+      if (password !== confirmPassword) throw new Error('Passwords do not match.');
+
+      // Send POST request to backend
+      const response = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          role,
+          firstName,
+          lastName,
+          email,
+          department,
+          gradYear: role === 'Alumni' ? parseInt(gradYear) : null,
+          batch: role === 'Student' ? batch : null,
+          password,
+          confirmPassword
+        })
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        console.log('Registration successful:', data);
+        setTimeout(() => {
+          window.location.href = 'login-page.html';
+        }, 1500);
+      } else {
+        throw new Error(data || 'Registration failed');
+      }
+    } catch (error) {
+      console.error('Registration error:', error.message);
+      alert(error.message);
+    } finally {
+      spinner.style.display = 'none';
+    }
+  });
 </script>
