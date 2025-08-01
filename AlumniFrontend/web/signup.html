@@ -14,13 +14,29 @@
   <style>
     body {
         font-family: 'Roboto', sans-serif;
-        background: linear-gradient(135deg, #f0f2f5, #e0e7ff);
+        background: linear-gradient(135deg, #002147, #0077c8);
+        background-size: 200% 200%;
+        animation: gradientAnimation 10s ease infinite;
         display: flex;
         flex-direction: column;
         min-height: 100vh;
         margin: 0;
         color: #333;
+        transition: background 0.5s ease;
     }
+
+    @keyframes gradientAnimation {
+        0% {
+            background-position: 0% 0%;
+        }
+        50% {
+            background-position: 100% 100%;
+        }
+        100% {
+            background-position: 0% 0%;
+        }
+    }
+
     .navbar {
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         background-color: #ffffff;
@@ -66,7 +82,7 @@
     }
     .register-container {
         max-width: 600px;
-        margin: 0 auto 40px;
+        margin: 60px auto 40px;
         padding: 30px;
         background-color: #ffffff;
         border-radius: 15px;
@@ -154,17 +170,18 @@
         text-decoration: underline;
     }
     .footer {
-        background-color: #003087;
-        color: #fff;
+        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
         padding: 40px 0;
-        margin-top: auto;
+        color: #003087;
     }
     .footer h5 {
         font-weight: 700;
         margin-bottom: 15px;
+        color: #003087;
     }
     .footer a {
-        color: #fff;
+        color: #003087;
         text-decoration: none;
         font-weight: 500;
         transition: color 0.3s ease;
@@ -175,6 +192,11 @@
     .footer .social-icons a {
         margin-right: 15px;
         font-size: 1.2rem;
+        color: #003087;
+        transition: color 0.3s ease;
+    }
+    .footer .social-icons a:hover {
+        color: #0059ff;
     }
     .form-check-label {
         font-size: 0.95rem;
@@ -186,11 +208,8 @@
     }
     @media (max-width: 768px) {
         .register-container {
-            margin: 20px;
+            margin: 40px 20px 40px;
             padding: 20px;
-        }
-        .hero-section h1 {
-            font-size: 2rem;
         }
         .navbar-brand {
             font-size: 1.5rem;
@@ -203,8 +222,7 @@
 <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container">
     <a class="navbar-brand" href="#">
-      <img src="https://via.placeholder.com/40x40.png?text=NSU+Logo" alt="NSU Logo" class="me-2">
-      NSU Alumni Network
+      Alumni Relationship & Networking System
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -221,12 +239,6 @@
     </div>
   </div>
 </nav>
-
-<!-- Hero Section -->
-<div class="hero-section">
-  <h1>Welcome to NSU Alumni Network</h1>
-  <p>Join our community to connect with alumni and students. Sign up today!</p>
-</div>
 
 <!-- Sign Up Form -->
 <div class="register-container" role="main" aria-label="Sign Up Form">
@@ -321,7 +333,7 @@
     <div class="row">
       <div class="col-md-4 mb-4">
         <h5>About Us</h5>
-        <p>Connect with the NSU Alumni Network to build lasting relationships.</p>
+        <p>Connect with the Alumni Relationship & Networking System to build lasting relationships.</p>
       </div>
       <div class="col-md-4 mb-4">
         <h5>Quick Links</h5>
@@ -334,7 +346,7 @@
       </div>
       <div class="col-md-4 mb-4">
         <h5>Contact Us</h5>
-        <p>Email: info@nsu.edu</p>
+        <p>Email: info@abc.edu</p>
         <div class="social-icons">
           <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
           <a href="#" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
@@ -343,7 +355,7 @@
       </div>
     </div>
     <hr class="bg-light">
-    <p class="text-center mb-0">&copy; 2025 North South University. All rights reserved.</p>
+    <p class="text-center mb-0">&copy; 2025 ABC University. All rights reserved.</p>
   </div>
 </footer>
 
