@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NSU Alumni Network</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+    /* NSU Blue colors */
+    :root {
+        --nsu-blue-dark: #003087;
+        --nsu-blue-medium: #0059ff;
+        --nsu-blue-light: #6ca0f6;
+        --nsu-gray-light: #f4f4f9;
+        --nsu-gray-hover: #f8f9fa;
+    }
+
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: var(--nsu-gray-light);
+        margin: 0;
+        padding: 0;
+        color: #212529;
+    }
+
+    /* Navbar */
+    .navbar {
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        background-color: #fff !important;
+    }
+    .navbar-brand {
+        font-weight: 700;
+        color: var(--nsu-blue-dark) !important;
+        font-size: 1.6rem;
+        letter-spacing: 1px;
+    }
+    .nav-link {
+        color: var(--nsu-blue-dark);
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+    .nav-link:hover, .nav-link:focus {
+        color: var(--nsu-blue-medium);
+    }
+    .dropdown-menu {
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .dropdown-item:hover, .dropdown-item:focus {
+        background-color: var(--nsu-blue-light);
+        color: white;
+    }
+
+    /* Hero Section with animated gradient background */
+    .hero-section {
+        position: relative;
+        color: white;
+        padding: 100px 15px 100px;
+        text-align: center;
+        border-radius: 0 0 30px 30px;
+        background: linear-gradient(-45deg, #003087, #0059ff, #2a6ef7, #004a99);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+        box-shadow: 0 4px 15px rgba(0, 48, 135, 0.3);
+    }
+
+    @keyframes gradientShift {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .hero-section h1 {
+        font-size: 3rem;
+        font-weight: 900;
+        letter-spacing: 2px;
+        margin-bottom: 15px;
+        text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+    .hero-section p.lead {
+        font-size: 1.25rem;
+        margin-bottom: 30px;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+    .hero-section .btn-light {
+        font-weight: 700;
+        padding: 12px 30px;
+        border-radius: 30px;
+        color: var(--nsu-blue-dark);
+        box-shadow: 0 4px 15px rgba(0, 48, 135, 0.25);
+        transition: all 0.3s ease;
+    }
+    .hero-section .btn-light:hover {
+        background-color: white;
+        color: var(--nsu-blue-medium);
+        transform: scale(1.05);
+        box-shadow: 0 6px 25px rgba(0, 89, 255, 0.45);
+    }
+
+    /* Feature Cards */
+    .feature-card {
+        transition: transform 0.35s ease, box-shadow 0.35s ease;
+        border: none;
+        border-radius: 15px;
+        background-color: white;
+        padding: 25px;
+        height: 100%;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        cursor: default;
+        user-select: none;
+    }
+    .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 25px rgba(0,89,255,0.25);
+    }
+    .feature-card h4 {
+        font-weight: 700;
+        color: var(--nsu-blue-dark);
+        margin-bottom: 15px;
+    }
+    .feature-card p {
+        color: #555;
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+
+    /* Alumni Profiles Section */
+    #view-profiles {
+        background-color: white;
+        border-radius: 20px;
+        padding: 50px 30px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        max-width: 1100px;
+        margin: 40px auto 80px;
+    }
+
+    #view-profiles h2 {
+        color: var(--nsu-blue-dark);
+        font-weight: 800;
+        margin-bottom: 40px;
+        letter-spacing: 1px;
+        text-align: center;
+    }
+
+    .search-filter {
+        background-color: white;
+        padding: 25px 30px;
+        border-radius: 20px;
+        box-shadow: 0 6px 20px rgba(0,89,255,0.15);
+        margin-bottom: 40px;
+    }
+    .search-filter input,
+    .search-filter select {
+        border: 2px solid var(--nsu-blue-light);
+        border-radius: 12px;
+        transition: border-color 0.3s ease;
+    }
+    .search-filter input:focus,
+    .search-filter select:focus {
+        border-color: var(--nsu-blue-medium);
+        box-shadow: 0 0 8px var(--nsu-blue-light);
+        outline: none;
+    }
+    .btn-primary {
+        background-color: var(--nsu-blue-dark);
+        border-color: var(--nsu-blue-dark);
+        font-weight: 600;
+        border-radius: 12px;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+    .btn-primary:hover, .btn-primary:focus {
+        background-color: var(--nsu-blue-medium);
+        border-color: var(--nsu-blue-medium);
+        box-shadow: 0 0 12px var(--nsu-blue-light);
+    }
+
+    /* Profile list item */
+    .profile-list-item {
+        background-color: white;
+        border-radius: 15px;
+        padding: 20px 30px;
+        margin-bottom: 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 3px 12px rgba(0,89,255,0.08);
+        transition: background-color 0.25s ease, transform 0.25s ease;
+        cursor: pointer;
+        user-select: none;
+    }
+    .profile-list-item:hover {
+        background-color: var(--nsu-gray-hover);
+        transform: translateY(-4px);
+    }
+    .profile-list-item h5 {
+        margin: 0;
+        color: var(--nsu-blue-dark);
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+    .profile-list-item .btn-outline-primary {
+        border-color: var(--nsu-blue-dark);
+        color: var(--nsu-blue-dark);
+        font-weight: 600;
+        border-radius: 12px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .profile-list-item .btn-outline-primary:hover {
+        background-color: var(--nsu-blue-medium);
+        border-color: var(--nsu-blue-medium);
+        color: white;
+        box-shadow: 0 0 12px var(--nsu-blue-light);
+    }
+
+    /* Pagination */
+    .pagination {
+        justify-content: center;
+        margin-top: 30px;
+    }
+    .page-item .page-link {
+        border-radius: 50%;
+        width: 42px;
+        height: 42px;
+        line-height: 42px;
+        text-align: center;
+        color: var(--nsu-blue-dark);
+        font-weight: 700;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        border: 2px solid transparent;
+    }
+    .page-item.active .page-link {
+        background-color: var(--nsu-blue-dark);
+        color: white;
+        border-color: var(--nsu-blue-dark);
+        box-shadow: 0 0 15px var(--nsu-blue-light);
+    }
+    .page-item .page-link:hover {
+        background-color: var(--nsu-blue-light);
+        color: var(--nsu-blue-dark);
+        border-color: var(--nsu-blue-light);
+    }
+
+    /* Loading Spinner */
+    .loading-spinner {
+        display: none;
+        text-align: center;
+        padding: 25px;
+    }
+
+    /* Footer */
+    .footer {
+        background-color: var(--nsu-blue-dark);
+        color: white;
+        padding: 40px 0;
+        text-align: center;
+        font-weight: 500;
+    }
+    .footer a {
+        color: #e3e9ff;
+        text-decoration: none;
+        font-weight: 500;
+        margin: 0 10px;
+        transition: color 0.3s ease;
+    }
+    .footer a:hover {
+        color: #ffffff;
+        text-decoration: underline;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 767px) {
+        .hero-section h1 {
+            font-size: 2.2rem;
+        }
+        .feature-card {
+            padding: 20px;
+        }
+        #view-profiles {
+            padding: 40px 20px;
+            margin: 20px 10px 60px;
+        }
+    }
+  </style>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+  <div class="container">
+    <a class="navbar-brand" href="#">NSU Alumni Network</a>
+    <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item dropdown">
+          <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="alumniDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+          >
+            Alumni Profiles
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="alumniDropdown">
+            <li><a class="dropdown-item" href="#view-profiles">View Profiles</a></li>
+            <li><a class="dropdown-item" href="#">Achievements</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="eventsDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+          >
+            Events
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
+            <li><a class="dropdown-item" href="#">Upcoming Events</a></li>
+            <li><a class="dropdown-item" href="#">Past Events</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="#">Mentorship</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Careers</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Admin Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="container">
+    <h1>NSU Alumni Network</h1>
+    <p class="lead">Connect, collaborate, and grow with our vibrant alumni community.</p>
+    <a href="#view-profiles" class="btn btn-light btn-lg">Explore Alumni</a>
+  </div>
+</section>
+
+<!-- Key Features -->
+<section id="features" class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-5">Key Features</h2>
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-4 col-lg-3">
+        <div class="feature-card">
+          <h4>Alumni Profiles</h4>
+          <p>Explore detailed profiles showcasing education, employment, and achievements.</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-lg-3">
+        <div class="feature-card">
+          <h4>Events & Participation</h4>
+          <p>Register for events and share feedback to stay connected.</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-lg-3">
+        <div class="feature-card">
+          <h4>Mentorship Programs</h4>
+          <p>Connect with mentors for personalized career guidance.</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-lg-3">
+        <div class="feature-card">
+          <h4>Career Opportunities</h4>
+          <p>Discover job and internship opportunities posted by alumni.</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-lg-3">
+        <div class="feature-card">
+          <h4>Admin Tools</h4>
+          <p>Manage communications and generate insightful reports.</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-lg-3">
+        <div class="feature-card">
+          <h4>Future Enhancements</h4>
+          <p>Mobile app, advanced analytics, and AI-driven recommendations.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Alumni Profiles Section -->
+<section id="view-profiles">
+  <div class="container">
+    <h2>Alumni Profiles</h2>
+    <!-- Search and Filter -->
+    <div class="search-filter mb-4">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <input type="text" id="searchInput" class="form-control" placeholder="Search by name" />
+        </div>
+        <div class="col-md-3">
+          <select id="departmentFilter" class="form-select">
+            <option value="">All Departments</option>
+            <!-- Populated dynamically -->
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select id="gradYearFilter" class="form-select">
+            <option value="">All Graduation Years</option>
+            <!-- Populated dynamically -->
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-primary w-100" onclick="fetchProfiles(1)">Search</button>
+        </div>
+      </div>
+    </div>
+    <!-- Loading Spinner -->
+    <div class="loading-spinner">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <!-- Profile List -->
+    <div id="profileList"></div>
+    <!-- Pagination -->
+    <nav aria-label="Profile pagination">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#" onclick="fetchProfiles(1)">1</a></li>
+        <li class="page-item"><a class="page-link" href="#" onclick="fetchProfiles(2)">2</a></li>
+        <!-- Add more dynamically -->
+      </ul>
+    </nav>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <p>NSU Alumni Network | Group-02</p>
+    <ul class="list-inline mb-2">
+      <li class="list-inline-item"><a href="#">Alumni Profiles</a></li>
+      <li class="list-inline-item"><a href="#">Events</a></li>
+      <li class="list-inline-item"><a href="#">Mentorship</a></li>
+      <li class="list-inline-item"><a href="#">Careers</a></li>
+      <li class="list-inline-item"><a href="#">Admin</a></li>
+      <li class="list-inline-item"><a href="#">Terms</a></li>
+      <li class="list-inline-item"><a href="#">Privacy</a></li>
+    </ul>
+    <p>© 2025 North South University. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Bootstrap JS and Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JavaScript -->
+<script>
+  // Sample data (to be replaced with backend API call)
+  const alumniData = [
+      { id: 1, name: "John Doe", department: "Computer Science", gradYear: "2015" },
+      { id: 2, name: "Jane Smith", department: "Business Administration", gradYear: "2018" },
+  ];
+
+  // Function to render profiles
+  function renderProfiles(profiles) {
+      const profileList = document.getElementById('profileList');
+      profileList.innerHTML = '';
+      if (profiles.length === 0) {
+          profileList.innerHTML = '<p class="text-center text-muted">No profiles found.</p>';
+          return;
+      }
+      profiles.forEach(profile => {
+          const profileItem = `
+              <div class="profile-list-item">
+                  <h5 class="mb-0">${profile.name}</h5>
+                  <a href="profile.html?id=${profile.id}" class="btn btn-outline-primary">View Profile</a>
+              </div>
+          `;
+          profileList.innerHTML += profileItem;
+      });
+  }
+
+  // Function to fetch profiles with pagination and filters
+  async function fetchProfiles(page = 1) {
+      const spinner = document.querySelector('.loading-spinner');
+      spinner.style.display = 'block';
+      try {
+          const searchInput = document.getElementById('searchInput').value.toLowerCase();
+          const departmentFilter = document.getElementById('departmentFilter').value;
+          const gradYearFilter = document.getElementById('gradYearFilter').value;
+
+          // Sample filtering (replace with API call)
+          const filteredProfiles = alumniData.filter(profile => {
+              const matchesSearch = profile.name.toLowerCase().includes(searchInput);
+              const matchesDepartment = departmentFilter ? profile.department === departmentFilter : true;
+              const matchesGradYear = gradYearFilter ? profile.gradYear === gradYearFilter : true;
+              return matchesSearch && matchesDepartment && matchesGradYear;
+          });
+
+          // Simulate pagination (10 profiles per page)
+          const pageSize = 10;
+          const start = (page - 1) * pageSize;
+          const paginatedProfiles = filteredProfiles.slice(start, start + pageSize);
+
+          renderProfiles(paginatedProfiles);
+      } catch (error) {
+          console.error('Error fetching profiles:', error);
+          document.getElementById('profileList').innerHTML =
+              '<p class="text-danger text-center">Error loading profiles. Please try again.</p>';
+      } finally {
+          spinner.style.display = 'none';
+      }
+  }
+
+  // Function to populate filter dropdowns
+  async function populateFilters() {
+      // Sample data (replace with API calls)
+      const departments = ["Computer Science", "Business Administration", "Electrical Engineering"];
+      const gradYears = ["2020", "2019", "2018"];
+
+      const departmentFilter = document.getElementById('departmentFilter');
+      departments.forEach(dept => {
+          const option = document.createElement('option');
+          option.value = dept;
+          option.textContent = dept;
+          departmentFilter.appendChild(option);
+      });
+
+      const gradYearFilter = document.getElementById('gradYearFilter');
+      gradYears.forEach(year => {
+          const option = document.createElement('option');
+          option.value = year;
+          option.textContent = year;
+          gradYearFilter.appendChild(option);
+      });
+  }
+
+  // Initial load
+  populateFilters();
+  fetchProfiles(1);
+</script>
+</body>
+</html>

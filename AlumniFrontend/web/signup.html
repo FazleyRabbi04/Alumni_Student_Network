@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - NSU Alumni Network</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background: linear-gradient(135deg, #f0f2f5, #e0e7ff);
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+        color: #333;
+    }
+    .navbar {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        padding: 1rem 0;
+    }
+    .navbar-brand {
+        font-weight: 700;
+        color: #003087 !important;
+        font-size: 1.8rem;
+        display: flex;
+        align-items: center;
+    }
+    .navbar-brand img {
+        height: 40px;
+        margin-right: 10px;
+    }
+    .nav-link {
+        font-weight: 500;
+        color: #555 !important;
+        padding: 0.5rem 1rem;
+        transition: color 0.3s ease, background-color 0.3s ease;
+    }
+    .nav-link:hover, .nav-link.active {
+        color: #0059ff !important;
+        background-color: rgba(0, 89, 255, 0.1);
+        border-radius: 5px;
+    }
+    .hero-section {
+        text-align: center;
+        padding: 60px 20px;
+        background-color: rgba(0, 48, 135, 0.05);
+        margin-bottom: 40px;
+    }
+    .hero-section h1 {
+        color: #003087;
+        font-weight: 700;
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+    .hero-section p {
+        color: #666;
+        font-size: 1.1rem;
+    }
+    .register-container {
+        max-width: 600px;
+        margin: 0 auto 40px;
+        padding: 30px;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .register-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+    }
+    .register-container h2 {
+        color: #003087;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 2.2rem;
+    }
+    .form-floating .form-control {
+        border-radius: 10px;
+        padding: 12px 15px;
+        border: 1px solid #ced4da;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .form-floating .form-control:focus {
+        border-color: #0059ff;
+        box-shadow: 0 0 8px rgba(0, 89, 255, 0.3);
+    }
+    .form-floating label {
+        color: #666;
+        font-weight: 500;
+    }
+    .input-group-text {
+        background-color: #f8f9fa;
+        border: 1px solid #ced4da;
+        border-right: none;
+        border-radius: 10px 0 0 10px;
+        padding: 12px 15px;
+    }
+    .btn-primary {
+        background-color: #003087;
+        border-color: #003087;
+        font-weight: 600;
+        border-radius: 10px;
+        padding: 12px;
+        width: 100%;
+        transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-primary:hover {
+        background-color: #0059ff;
+        border-color: #0059ff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 89, 255, 0.3);
+    }
+    .alert {
+        border-radius: 10px;
+        font-size: 0.9rem;
+        padding: 12px;
+        margin-bottom: 15px;
+    }
+    .loading-spinner {
+        display: none;
+        text-align: center;
+        margin-top: 20px;
+    }
+    .toggle-password {
+        cursor: pointer;
+        user-select: none;
+    }
+    .register-links {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.95rem;
+    }
+    .register-links a {
+        color: #003087;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .register-links a:hover {
+        color: #0059ff;
+        text-decoration: underline;
+    }
+    .footer {
+        background-color: #003087;
+        color: #fff;
+        padding: 40px 0;
+        margin-top: auto;
+    }
+    .footer h5 {
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+    .footer a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+    .footer a:hover {
+        color: #0059ff;
+    }
+    .footer .social-icons a {
+        margin-right: 15px;
+        font-size: 1.2rem;
+    }
+    .form-check-label {
+        font-size: 0.95rem;
+        color: #333;
+        margin-left: 10px;
+    }
+    .form-check {
+        margin-bottom: 15px;
+    }
+    @media (max-width: 768px) {
+        .register-container {
+            margin: 20px;
+            padding: 20px;
+        }
+        .hero-section h1 {
+            font-size: 2rem;
+        }
+        .navbar-brand {
+            font-size: 1.5rem;
+        }
+    }
+  </style>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img src="https://via.placeholder.com/40x40.png?text=NSU+Logo" alt="NSU Logo" class="me-2">
+      NSU Alumni Network
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="login-page.html">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="register.html">Sign Up</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<div class="hero-section">
+  <h1>Welcome to NSU Alumni Network</h1>
+  <p>Join our community to connect with alumni and students. Sign up today!</p>
+</div>
+
+<!-- Sign Up Form -->
+<div class="register-container" role="main" aria-label="Sign Up Form">
+  <h2>Sign Up</h2>
+  <form id="registerForm">
+    <div class="mb-3">
+      <label class="form-label">I am registering as:</label>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="role" id="roleAlumni" value="Alumni" required>
+        <label class="form-check-label" for="roleAlumni">Alumni</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="role" id="roleStudent" value="Student">
+        <label class="form-check-label" for="roleStudent">Student</label>
+      </div>
+    </div>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
+          <label for="firstName">First Name</label>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
+          <label for="lastName">Last Name</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="email" class="form-control" id="email" placeholder="Email Address" required>
+      <label for="email">Email Address</label>
+    </div>
+    <div class="form-floating mb-3">
+      <select class="form-select" id="department" required>
+        <option value="" disabled selected>Select your department</option>
+        <!-- Populated dynamically -->
+      </select>
+      <label for="department">Department</label>
+    </div>
+    <div class="mb-3" id="gradYearGroup" style="display: none;">
+      <div class="form-floating">
+        <select class="form-select" id="gradYear">
+          <option value="" disabled selected>Select graduation year</option>
+          <!-- Populated dynamically -->
+        </select>
+        <label for="gradYear">Graduation Year</label>
+      </div>
+    </div>
+    <div class="mb-3" id="batchGroup" style="display: none;">
+      <div class="form-floating">
+        <select class="form-select" id="batch">
+          <option value="" disabled selected>Select your batch</option>
+          <!-- Populated dynamically -->
+        </select>
+        <label for="batch">Batch</label>
+      </div>
+    </div>
+    <div class="form-floating mb-3 position-relative">
+      <input type="password" class="form-control" id="password" placeholder="Password" required>
+      <label for="password">Password</label>
+      <span class="input-group-text toggle-password position-absolute top-50 end-0 translate-middle-y" onclick="togglePassword('password', 'togglePasswordIcon')">
+                <i class="bi bi-eye" id="togglePasswordIcon"></i>
+            </span>
+    </div>
+    <div class="form-floating mb-4 position-relative">
+      <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
+      <label for="confirmPassword">Confirm Password</label>
+      <span class="input-group-text toggle-password position-absolute top-50 end-0 translate-middle-y" onclick="togglePassword('confirmPassword', 'toggleConfirmPasswordIcon')">
+                <i class="bi bi-eye" id="toggleConfirmPasswordIcon"></i>
+            </span>
+    </div>
+    <button type="submit" class="btn btn-primary">Sign Up</button>
+    <div class="loading-spinner">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </form>
+  <div class="register-links">
+    <p>Already have an account? <a href="login-page.html">Sign In</a></p>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <h5>About Us</h5>
+        <p>Connect with the NSU Alumni Network to build lasting relationships.</p>
+      </div>
+      <div class="col-md-4 mb-4">
+        <h5>Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a href="#">Alumni Profiles</a></li>
+          <li><a href="#">Events</a></li>
+          <li><a href="#">Mentorship</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 mb-4">
+        <h5>Contact Us</h5>
+        <p>Email: info@nsu.edu</p>
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+    <hr class="bg-light">
+    <p class="text-center mb-0">&copy; 2025 North South University. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Bootstrap JS and Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom JavaScript -->
+<script>
+  // Toggle password visibility
+  function togglePassword(inputId, iconId) {
+      const input = document.getElementById(inputId);
+      const toggleIcon = document.getElementById(iconId);
+      if (input.type === 'password') {
+          input.type = 'text';
+          toggleIcon.classList.replace('bi-eye', 'bi-eye-slash');
+      } else {
+          input.type = 'password';
+          toggleIcon.classList.replace('bi-eye-slash', 'bi-eye');
+      }
+  }
+
+  // Show/hide graduation year or batch fields based on role
+  document.querySelectorAll('input[name="role"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+          const gradYearGroup = document.getElementById('gradYearGroup');
+          const batchGroup = document.getElementById('batchGroup');
+          if (radio.value === 'Alumni') {
+              gradYearGroup.style.display = 'block';
+              batchGroup.style.display = 'none';
+              document.getElementById('gradYear').required = true;
+              document.getElementById('batch').required = false;
+          } else if (radio.value === 'Student') {
+              gradYearGroup.style.display = 'none';
+              batchGroup.style.display = 'block';
+              document.getElementById('gradYear').required = false;
+              document.getElementById('batch').required = true;
+          }
+      });
+  });
+
+  // Populate department dropdown
+  async function populateDepartments() {
+      const departmentSelect = document.getElementById('department');
+      const departments = [
+          'Computer Science',
+          'Business Administration',
+          'Electrical Engineering'
+      ];
+      departments.forEach(dept => {
+          const option = document.createElement('option');
+          option.value = dept;
+          option.textContent = dept;
+          departmentSelect.appendChild(option);
+      });
+  }
+
+  // Populate graduation year and batch dropdowns
+  function populateGradYearsAndBatches() {
+      const gradYearSelect = document.getElementById('gradYear');
+      const batchSelect = document.getElementById('batch');
+      const currentYear = new Date().getFullYear();
+
+      // Alumni: Graduation years (past 50 years)
+      for (let year = currentYear; year >= currentYear - 50; year--) {
+          const option = document.createElement('option');
+          option.value = year;
+          option.textContent = year;
+          gradYearSelect.appendChild(option);
+      }
+
+      // Students: Batch (e.g., Spring/Fall for next 5 years)
+      const seasons = ['Spring', 'Fall'];
+      for (let year = currentYear; year <= currentYear + 5; year++) {
+          seasons.forEach(season => {
+              const option = document.createElement('option');
+              option.value = `${season} ${year}`;
+              option.textContent = `${season} ${year}`;
+              batchSelect.appendChild(option);
+          });
+      }
+  }
+
+  // Handle form submission
+  document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const role = document.querySelector('input[name="role"]:checked')?.value;
+      const firstName = document.getElementById('firstName').value;
+      const lastName = document.getElementById('lastName').value;
+      const email = document.getElementById('email').value;
+      const department = document.getElementById('department').value;
+      const gradYear = document.getElementById('gradYear').value;
+      const batch = document.getElementById('batch').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const errorAlert = document.getElementById('errorAlert');
+      const successAlert = document.getElementById('successAlert');
+      const spinner = document.querySelector('.loading-spinner');
+
+      // Reset alerts
+      errorAlert.style.display = 'none';
+      successAlert.style.display = 'none';
+
+      // Client-side validation
+      if (!role) {
+          errorAlert.textContent = 'Please select whether you are an Alumni or Student.';
+          errorAlert.style.display = 'block';
+          return;
+      }
+      if (!firstName || firstName.length < 2) {
+          errorAlert.textContent = 'First name must be at least 2 characters long.';
+          errorAlert.style.display = 'block';
+          return;
+      }
+      if (!lastName || lastName.length < 2) {
+          errorAlert.textContent = 'Last name must be at least 2 characters long.';
+          errorAlert.style.display = 'block';
+          return;
+      }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          errorAlert.textContent = 'Please enter a valid email address.';
+          errorAlert.style.display = 'block';
+          return;
+      }
+      if (!department) {
+          errorAlert.textContent = 'Please select a department.';
+          errorAlert.style.display = 'block';
+          return;
+      }
+      if (role === 'Alumni' && !gradYear) {
+          errorAlert.textContent = 'Please select a graduation year.';
+          errorAlert.style.display = 'block';
+          return;
+      }
+      if (role === 'Student' && !batch) {
+          errorAlert.textContent = 'Please select a batch.';
+          errorAlert.style.display = 'block';
+          return;
+      }
+      if (!password || password.length < 8) {
+          errorAlert.textContent = 'Password must be at least 8 characters long.';
+          errorAlert.style.display = 'block';
+          return;
+      }
+      if (password !== confirmPassword) {
+          errorAlert.textContent = 'Passwords do not match.';
+          errorAlert.style.display = 'block';
+          return;
+      }
+
+      spinner.style.display = 'block';
+
+      try {
+          console.log('Registration attempt:', { role, firstName, lastName, email, department, gradYear, batch, password });
+          successAlert.textContent = 'Registration successful! Redirecting to login...';
+          successAlert.style.display = 'block';
+          setTimeout(() => {
+              window.location.href = 'login-page.html';
+          }, 1500);
+      } catch (error) {
+          console.error('Registration error:', error);
+          errorAlert.textContent = 'Registration failed. Email may already be in use.';
+          errorAlert.style.display = 'block';
+      } finally {
+          spinner.style.display = 'none';
+      }
+  });
+
+  // Initialize dropdowns
+  populateDepartments();
+  populateGradYearsAndBatches();
+</script>
