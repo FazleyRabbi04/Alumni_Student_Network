@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #002147, #0077c8); }
+        .navbar, .footer { background-color: #1A2526; }
+        .btn-primary { background-color: #005B99; border-color: #005B99; }
+        .btn-primary:hover { background-color: #004080; border-color: #004080; }
+        .event-card { transition: transform 0.3s; }
+        .event-card:hover { transform: scale(1.02); }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="home.html">Alumni Relationship & Networking System</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="alumni-profiles.html">Alumni Profiles</a></li>
+                <li class="nav-item"><a class="nav-link active" href="events.html">Events</a></li>
+                <li class="nav-item"><a class="nav-link" href="mentorship.html">Mentorship</a></li>
+                <li class="nav-item"><a class="nav-link" href="careers.html">Careers</a></li>
+                <li class="nav-item"><a class="nav-link" href="signup.html">Register</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container my-5">
+    <h1 class="text-center mb-4">Events</h1>
+    <!-- Tabs for Upcoming and Past Events -->
+    <ul class="nav nav-tabs mb-4" id="eventTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="upcoming-tab" data-bs-toggle="tab" data-bs-target="#upcoming" type="button" role="tab" aria-controls="upcoming" aria-selected="true">Upcoming Events</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="past-tab" data-bs-toggle="tab" data-bs-target="#past" type="button" role="tab" aria-controls="past" aria-selected="false">Past Events</button>
+        </li>
+    </ul>
+    <div class="tab-content" id="eventTabContent">
+        <!-- Upcoming Events -->
+        <div class="tab-pane fade show active" id="upcoming" role="tabpanel" aria-labelledby="upcoming-tab">
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <div class="col">
+                    <div class="card event-card h-100 shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">Alumni Reunion 2025</h5>
+                            <p class="card-text"><strong>Date:</strong> 15-12-2025</p>
+                            <p class="card-text"><strong>Time:</strong> 18:00 - 22:00</p>
+                            <p class="card-text"><strong>Venue:</strong> NSU Auditorium, Dhaka</p>
+                            <p class="card-text"><strong>Type:</strong> Networking</p>
+                            <p class="card-text">Join us for an evening of reconnecting with fellow alumni, sharing memories, and building new connections.</p>
+                            <a href="#" class="btn btn-primary">Register for Event</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card event-card h-100 shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">Career Workshop</h5>
+                            <p class="card-text"><strong>Date:</strong> 20-11-2025</p>
+                            <p class="card-text"><strong>Time:</strong> 10:00 - 13:00</p>
+                            <p class="card-text"><strong>Venue:</strong> NSU Seminar Hall, Dhaka</p>
+                            <p class="card-text"><strong>Type:</strong> Professional Development</p>
+                            <p class="card-text">Learn from industry experts about career growth and job opportunities in tech.</p>
+                            <a href="#" class="btn btn-primary">Register for Event</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more cards dynamically -->
+            </div>
+        </div>
+        <!-- Past Events -->
+        <div class="tab-pane fade" id="past" role="tabpanel" aria-labelledby="past-tab">
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <div class="col">
+                    <div class="card event-card h-100 shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">Alumni Tech Talk 2024</h5>
+                            <p class="card-text"><strong>Date:</strong> 10-10-2024</p>
+                            <p class="card-text"><strong>Time:</strong> 15:00 - 17:00</p>
+                            <p class="card-text"><strong>Venue:</strong> NSU Conference Room, Dhaka</p>
+                            <p class="card-text"><strong>Type:</strong> Knowledge Sharing</p>
+                            <p class="card-text">A session on AI advancements by notable alumni.</p>
+                            <a href="#" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more cards dynamically -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer text-white text-center py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <a href="alumni-profiles.html" class="text-white text-decoration-none">Alumni Profiles</a> |
+                <a href="events.html" class="text-white text-decoration-none">Events</a> |
+                <a href="mentorship.html" class="text-white text-decoration-none">Mentorship</a> |
+                <a href="careers.html" class="text-white text-decoration-none">Careers</a> |
+                <a href="signup.html" class="text-white text-decoration-none">Admin</a> |
+                <a href="#" class="text-white text-decoration-none">Terms</a> |
+                <a href="#" class="text-white text-decoration-none">Privacy</a>
+            </div>
+        </div>
+        <p class="mt-2">© 2025 ABC University. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
