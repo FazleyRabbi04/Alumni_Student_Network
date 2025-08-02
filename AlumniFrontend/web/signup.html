@@ -88,6 +88,12 @@
     .spinner-border {
         display: none;
     }
+    .error {
+        color: red;
+        font-size: 0.9rem;
+        margin-top: 5px;
+        display: none;
+    }
     .footer {
         box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
         background-color: #ffffff;
@@ -153,7 +159,7 @@
 
 <div class="login-section">
   <h2>Sign Up</h2>
-  <form id="signupForm" action="/signup" method="POST">
+  <form id="signupForm" action="/api/signup" method="POST" onsubmit="return validateForm(event)">
     <div class="mb-3">
       <label class="form-label">I am registering as:</label>
       <div class="form-check">
@@ -164,30 +170,42 @@
         <input class="form-check-input" type="radio" name="role" id="student" value="student" onchange="toggleYearFields()">
         <label class="form-check-label" for="student">Student</label>
       </div>
+      <div id="roleError" class="error"></div>
     </div>
     <div class="mb-3">
       <label for="first_name" class="form-label">First Name</label>
       <input type="text" class="form-control" id="first_name" name="first_name" required>
+      <div id="firstNameError" class="error"></div>
     </div>
     <div class="mb-3">
       <label for="last_name" class="form-label">Last Name</label>
       <input type="text" class="form-control" id="last_name" name="last_name" required>
+      <div id="lastNameError" class="error"></div>
     </div>
     <div class="mb-3">
       <label for="street" class="form-label">Street</label>
       <input type="text" class="form-control" id="street" name="street" required>
+      <div id="streetError" class="error"></div>
     </div>
     <div class="mb-3">
       <label for="city" class="form-label">City</label>
       <input type="text" class="form-control" id="city" name="city" required>
+      <div id="cityError" class="error"></div>
     </div>
     <div class="mb-3">
       <label for="zip" class="form-label">Zip</label>
       <input type="text" class="form-control" id="zip" name="zip" required>
+      <div id="zipError" class="error"></div>
     </div>
     <div class="mb-3">
       <label for="NID" class="form-label">NID</label>
       <input type="text" class="form-control" id="NID" name="NID" required>
+      <div id="NIDError" class="error"></div>
+    </div>
+    <div class="mb-3">
+      <label for="phone" class="form-label">Phone Number(s)</label>
+      <input type="text" class="form-control" id="phone" name="phone" placeholder="e.g., 017********, 015********" required>
+      <div id="phoneError" class="error"></div>
     </div>
     <div class="mb-3">
       <label for="gender" class="form-label">Gender</label>
@@ -197,32 +215,41 @@
         <option value="Female">Female</option>
         <option value="Other">Other</option>
       </select>
+      <div id="genderError" class="error"></div>
     </div>
     <div class="mb-3">
       <label for="department" class="form-label">Department</label>
       <select class="form-control" id="department" name="department" required>
         <option value="">Select Department</option>
-        <option value="Electrical & Computer Engineering">Electrical & Computer Engineering</option>
-        <option value="Computer Science">Computer Science</option>
-        <option value="Business Administration">Business Administration</option>
+        <option value="Bachelor of Architecture">Bachelor of Architecture</option>
+        <option value="BS in Civil & Environmental Engineering (CEE)">BS in Civil & Environmental Engineering (CEE)</option>
+        <option value="BS in Computer Science & Engineering (CSE)">BS in Computer Science & Engineering (CSE)</option>
+        <option value="BS in Electrical & Electronic Engineering (EEE)">BS in Electrical & Electronic Engineering (EEE)</option>
+        <option value="BS in Electronic & Telecom Engineering (ETE)">BS in Electronic & Telecom Engineering (ETE)</option>
+        <option value="BS in Biochemistry and Biotechnology">BS in Biochemistry and Biotechnology</option>
+        <option value="BS in Environmental Science & Management">BS in Environmental Science & Management</option>
+        <option value="BS in Microbiology">BS in Microbiology</option>
+        <option value="BPharm Professional">BPharm Professional</option>
+        <option value="BA in English">BA in English</option>
+        <option value="Bachelor of Laws (LLB Hons)">Bachelor of Laws (LLB Hons)</option>
+        <option value="BSS in Media and Journalism (MAJ)">BSS in Media and Journalism (MAJ)</option>
       </select>
+      <div id="departmentError" class="error"></div>
     </div>
     <div class="mb-3">
       <label for="date_of_birth" class="form-label">Date of Birth</label>
-      <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" required>
+      <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" required onchange="calculateAge()">
+      <div id="dobError" class="error"></div>
     </div>
     <div class="mb-3">
-      <label for="email" class="form-label">Email Address</label>
-      <input type="email" class="form-control" id="email" name="email" required>
+      <label for="age" class="form-label">Age</label>
+      <input type="text" class="form-control" id="age" name="age" readonly>
+      <div id="ageError" class="error"></div>
     </div>
     <div class="mb-3">
-      <label for="department_select" class="form-label">Select your department</label>
-      <select class="form-control" id="department_select" name="department_select" required>
-        <option value="">Department</option>
-        <option value="Electrical & Computer Engineering">Electrical & Computer Engineering</option>
-        <option value="Computer Science">Computer Science</option>
-        <option value="Business Administration">Business Administration</option>
-      </select>
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" id="email" name="email" placeholder="e.g., xyz12@abc.edu" required>
+      <div id="emailError" class="error"></div>
     </div>
     <div class="mb-3 graduation-year" style="display: none;">
       <label for="graduation_year" class="form-label">Select graduation year</label>
@@ -235,6 +262,7 @@
         <option value="2024">2024</option>
         <option value="2025">2025</option>
       </select>
+      <div id="gradYearError" class="error"></div>
     </div>
     <div class="mb-3 batch-year" style="display: none;">
       <label for="batch" class="form-label">Select your batch</label>
@@ -246,14 +274,22 @@
         <option value="2019-2023">2019-2023</option>
         <option value="2020-2024">2020-2024</option>
       </select>
+      <div id="batchError" class="error"></div>
+    </div>
+    <div class="mb-3">
+      <label for="skills" class="form-label">Skills</label>
+      <input type="text" class="form-control" id="skills" name="skills" placeholder="e.g., Java, Python, SQL" required>
+      <div id="skillsError" class="error"></div>
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Password</label>
       <input type="password" class="form-control" id="password" name="password" required>
+      <div id="passwordError" class="error"></div>
     </div>
     <div class="mb-3">
       <label for="confirm_password" class="form-label">Confirm Password</label>
       <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+      <div id="confirmPasswordError" class="error"></div>
     </div>
     <button type="submit" class="btn btn-primary" id="signupBtn">
       Sign Up
@@ -264,6 +300,7 @@
                 <span class="visually-hidden">Loading...</span>
             </span>
     </div>
+    <div id="generalError" class="error"></div>
   </form>
   <p class="text-center mt-3">Already have an account? <a href="home.html">Sign In</a></p>
 </div>
@@ -279,7 +316,7 @@
         <h5>Quick Links</h5>
         <ul class="list-unstyled">
           <li><a href="profile.html">Alumni Profiles</a></li>
-          <li><a href="#">Events</a></li>
+          <li><a href="events.html">Events</a></li>
           <li><a href="mentorship.html">Mentorship</a></li>
           <li><a href="careers.html">Careers</a></li>
         </ul>
@@ -301,20 +338,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-  document.getElementById('signupForm').addEventListener('submit', function(e) {
-      const btn = document.getElementById('signupBtn');
-      const spinner = btn.querySelector('.spinner-border');
-      const loading = document.getElementById('loading');
-      btn.disabled = true;
-      spinner.style.display = 'inline-block';
-      loading.style.display = 'block';
-      setTimeout(() => {
-          btn.disabled = false;
-          spinner.style.display = 'none';
-          loading.style.display = 'none';
-      }, 2000); // Simulate loading
-  });
-
   function toggleYearFields() {
       const alumniRadio = document.getElementById('alumni');
       const studentRadio = document.getElementById('student');
@@ -334,6 +357,157 @@
       }
   }
 
-  // Trigger on page load to set initial state based on default selection
+  function calculateAge() {
+      const dob = document.getElementById('date_of_birth').value;
+      if (dob) {
+          const birthDate = new Date(dob);
+          const today = new Date();
+          let age = today.getFullYear() - birthDate.getFullYear();
+          const monthDiff = today.getMonth() - birthDate.getMonth();
+          if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+              age--;
+          }
+          document.getElementById('age').value = age;
+      }
+  }
+
+  function validateForm(event) {
+      event.preventDefault();
+      let isValid = true;
+      const errors = {};
+
+      // Reset error messages
+      document.querySelectorAll('.error').forEach(error => error.style.display = 'none');
+
+      // Validate required fields
+      const firstName = document.getElementById('first_name').value.trim();
+      if (!firstName) {
+          errors.firstName = 'First Name is required';
+          isValid = false;
+      }
+
+      const lastName = document.getElementById('last_name').value.trim();
+      if (!lastName) {
+          errors.lastName = 'Last Name is required';
+          isValid = false;
+      }
+
+      const street = document.getElementById('street').value.trim();
+      if (!street) {
+          errors.street = 'Street is required';
+          isValid = false;
+      }
+
+      const city = document.getElementById('city').value.trim();
+      if (!city) {
+          errors.city = 'City is required';
+          isValid = false;
+      }
+
+      const zip = document.getElementById('zip').value.trim();
+      if (!zip) {
+          errors.zip = 'Zip is required';
+          isValid = false;
+      }
+
+      const NID = document.getElementById('NID').value.trim();
+      const nidRegex = /^\d{10}$/;
+      if (!NID || !nidRegex.test(NID)) {
+          errors.NID = 'NID must be exactly 10 digits';
+          isValid = false;
+      }
+
+      const phone = document.getElementById('phone').value.trim();
+      const phoneRegex = /^\d{11}(,\s*\d{11})*$/;
+      if (!phone || !phoneRegex.test(phone)) {
+          errors.phone = 'Phone number(s) must be 11 digits each, separated by commas if multiple';
+          isValid = false;
+      }
+
+      const gender = document.getElementById('gender').value;
+      if (!gender) {
+          errors.gender = 'Gender is required';
+          isValid = false;
+      }
+
+      const department = document.getElementById('department').value;
+      if (!department) {
+          errors.department = 'Department is required';
+          isValid = false;
+      }
+
+      const dob = document.getElementById('date_of_birth').value;
+      if (!dob) {
+          errors.dob = 'Date of Birth is required';
+          isValid = false;
+      }
+      calculateAge(); // Ensure age is updated
+
+      const email = document.getElementById('email').value.trim();
+      const emailRegex = /^[a-zA-Z0-9]+@abc\.edu$/;
+      if (!email || !emailRegex.test(email)) {
+          errors.email = 'Email must be in the format (e.g., xsdsfd@abc.edu)';
+          isValid = false;
+      }
+
+      const deptSelect = document.getElementById('department_select').value;
+      if (!deptSelect) {
+          errors.deptSelect = 'Department selection is required';
+          isValid = false;
+      }
+
+      const gradYear = document.getElementById('graduation_year');
+      const batch = document.getElementById('batch');
+      if (document.getElementById('alumni').checked && !gradYear.value) {
+          errors.gradYear = 'Graduation Year is required for Alumni';
+          isValid = false;
+      }
+      if (document.getElementById('student').checked && !batch.value) {
+          errors.batch = 'Batch is required for Student';
+          isValid = false;
+      }
+
+      const skills = document.getElementById('skills').value.trim();
+      if (!skills) {
+          errors.skills = 'Skills are required';
+          isValid = false;
+      }
+
+      const password = document.getElementById('password').value;
+      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+      if (!password || !passwordRegex.test(password)) {
+          errors.password = 'Password must be at least 6 characters with a letter and a number';
+          isValid = false;
+      }
+
+      const confirmPassword = document.getElementById('confirm_password').value;
+      if (password !== confirmPassword) {
+          errors.confirmPassword = 'Passwords do not match';
+          isValid = false;
+      }
+
+      // Display errors
+      for (let key in errors) {
+          const errorElement = document.getElementById(key + 'Error');
+          if (errorElement) {
+              errorElement.textContent = errors[key];
+              errorElement.style.display = 'block';
+          }
+      }
+
+      if (isValid) {
+          const btn = document.getElementById('signupBtn');
+          const spinner = btn.querySelector('.spinner-border');
+          const loading = document.getElementById('loading');
+          btn.disabled = true;
+          spinner.style.display = 'inline-block';
+          loading.style.display = 'block';
+          document.getElementById('signupForm').submit();
+      }
+
+      return isValid;
+  }
+
+  // Trigger on page load to set initial state
   document.querySelector('input[name="role"]:checked')?.dispatchEvent(new Event('change'));
 </script>
