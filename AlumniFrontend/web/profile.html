@@ -3,315 +3,225 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alumni Profile - NSU Alumni Network</title>
+  <title>Alumni Profile - Alumni Relationship & Networking System</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     body {
         font-family: 'Roboto', sans-serif;
-        background-color: #f4f7fb;
-        overflow-x: hidden;
+        background: linear-gradient(135deg, #002147, #0077c8);
+        background-size: 200% 200%;
+        animation: gradientAnimation 10s ease infinite;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+        color: #333;
+        transition: background 0.5s ease;
+    }
+    @keyframes gradientAnimation {
+        0% { background-position: 0% 0%; }
+        50% { background-position: 100% 100%; }
+        100% { background-position: 0% 0%; }
+    }
+    .navbar {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        padding: 1rem 0;
     }
     .navbar-brand {
         font-weight: 700;
         color: #003087 !important;
+        font-size: 1.8rem;
+        display: flex;
+        align-items: center;
     }
-    .navbar {
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    .nav-link {
+        font-weight: 500;
+        color: #555 !important;
+        padding: 0.5rem 1rem;
+        transition: color 0.3s ease, background-color 0.3s ease;
+    }
+    .nav-link:hover, .nav-link.active {
+        color: #0059ff !important;
+        background-color: rgba(0, 89, 255, 0.1);
+        border-radius: 5px;
+    }
+    .profile-container {
+        max-width: 900px;
+        margin: 60px auto 40px;
+        padding: 30px;
         background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .profile-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
     }
     .profile-header {
-        background: linear-gradient(135deg, #003087, #0059ff);
-        color: white;
-        padding: 60px 0;
         text-align: center;
-        border-radius: 0 0 30px 30px;
-        animation: slideDown 1s ease;
+        margin-bottom: 30px;
     }
-    .profile-photo {
-        width: 160px;
-        height: 160px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 5px solid #fff;
-        margin-top: -80px;
-        box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-        transition: transform 0.3s;
-    }
-    .profile-photo:hover {
-        transform: scale(1.07);
-    }
-    .profile-card {
-        background-color: #ffffff;
-        border-radius: 16px;
-        padding: 30px;
-        margin-bottom: 25px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-        animation: fadeIn 1s ease;
-    }
-    .section-title {
+    .profile-header h2 {
         color: #003087;
-        border-left: 4px solid #0059ff;
-        padding-left: 12px;
-        margin-bottom: 20px;
-        font-size: 1.4rem;
-        font-weight: 600;
+        font-weight: 700;
     }
-    .list-group-item {
-        border: none;
-        background: transparent;
-        padding: 10px 0;
-        font-size: 1rem;
-        animation: fadeInUp 0.7s ease;
+    .profile-section h4 {
+        color: #003087;
+        font-weight: 700;
+        margin-top: 20px;
+    }
+    .profile-section p {
+        color: #666;
+        margin: 5px 0;
     }
     .btn-primary {
         background-color: #003087;
         border-color: #003087;
-        font-weight: 500;
+        font-weight: 600;
+        border-radius: 10px;
+        padding: 10px 20px;
+        transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
     }
     .btn-primary:hover {
         background-color: #0059ff;
         border-color: #0059ff;
-    }
-    .btn-connect {
-        background-color: #28a745;
-        border-color: #28a745;
-        font-weight: 500;
-    }
-    .btn-connect:hover {
-        background-color: #218838;
-        border-color: #218838;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 89, 255, 0.3);
     }
     .footer {
-        background-color: #003087;
-        color: white;
+        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
         padding: 40px 0;
-        margin-top: 50px;
+        color: #003087;
+    }
+    .footer h5 {
+        font-weight: 700;
+        margin-bottom: 15px;
     }
     .footer a {
-        color: #ffffff;
+        color: #003087;
         text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
     }
     .footer a:hover {
-        text-decoration: underline;
+        color: #0059ff;
     }
-    .loading-spinner {
-        display: none;
-        text-align: center;
-        padding: 20px;
+    .footer .social-icons a {
+        margin-right: 15px;
+        font-size: 1.2rem;
+        color: #003087;
+        transition: color 0.3s ease;
     }
-    @keyframes slideDown {
-        from { transform: translateY(-40px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
+    .footer .social-icons a:hover {
+        color: #0059ff;
     }
-    @keyframes fadeIn {
-        from { opacity: 0; transform: scale(0.98); }
-        to { opacity: 1; transform: scale(1); }
-    }
-    @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(15px); }
-        to { opacity: 1; transform: translateY(0); }
+    @media (max-width: 768px) {
+        .profile-container {
+            margin: 40px 20px 40px;
+            padding: 20px;
+        }
+        .navbar-brand {
+            font-size: 1.5rem;
+        }
     }
   </style>
 </head>
 <body>
-
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg navbar-light">
   <div class="container">
-    <a class="navbar-brand" href="home.html">NSU Alumni Network</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <a class="navbar-brand" href="home.html">Alumni Relationship & Networking System</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-            Alumni Profiles
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="home.html#view-profiles">View Profiles</a></li>
-            <li><a class="dropdown-item" href="#">Achievements</a></li>
-          </ul>
+        <li class="nav-item">
+          <a class="nav-link" href="home.html">Home</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-            Events
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Upcoming Events</a></li>
-            <li><a class="dropdown-item" href="#">Past Events</a></li>
-          </ul>
+        <li class="nav-item">
+          <a class="nav-link" href="signup.html">Sign Up</a>
         </li>
-        <li class="nav-item"><a class="nav-link" href="#">Mentorship</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Careers</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Admin Login</a></li>
+        <li class="nav-item">
+          <a class="nav-link" href="careers.html">Careers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="mentorship.html">Mentorship</a>
+        </li>
       </ul>
     </div>
   </div>
 </nav>
 
-<!-- Profile Header -->
-<section class="profile-header">
-  <div class="container">
-    <h1 id="alumniName">Alumni Profile</h1>
-    <p id="gradYear" class="lead mb-0">Class of 2015</p>
+<div class="profile-container">
+  <div class="profile-header">
+    <h2>Alumni Profile</h2>
+    <p>Details of a distinguished alumnus</p>
   </div>
-</section>
-
-<!-- Main Content -->
-<section class="py-5">
-  <div class="container">
-    <div class="loading-spinner">
-      <div class="spinner-border text-primary"></div>
-    </div>
-
-    <div class="text-center">
-      <img id="profilePhoto" src="https://via.placeholder.com/150" alt="Profile Photo" class="profile-photo">
-    </div>
-
-    <div class="profile-card mt-4">
-      <h4 class="section-title">Personal Information</h4>
-      <div class="row">
-        <div class="col-md-6">
-          <p><strong>Full Name:</strong> <span id="fullName">John Doe</span></p>
-          <p><strong>Department:</strong> <span id="department">Computer Science</span></p>
-          <p><strong>Graduation Year:</strong> <span id="gradYearInfo">2015</span></p>
-        </div>
-        <div class="col-md-6">
-          <p><strong>Email:</strong> <span id="email">john.doe@example.com</span></p>
-          <p><strong>Phone:</strong> <span id="phone">+8801234567890</span></p>
-          <p><strong>Location:</strong> <span id="location">Dhaka, Bangladesh</span></p>
-        </div>
-      </div>
-      <div class="text-center mt-3">
-        <button class="btn btn-connect" data-bs-toggle="modal" data-bs-target="#connectModal">Connect</button>
-      </div>
-    </div>
-
-    <div class="profile-card">
-      <h4 class="section-title">Education History</h4>
-      <ul id="educationList" class="list-group"></ul>
-    </div>
-    <div class="profile-card">
-      <h4 class="section-title">Employment History</h4>
-      <ul id="employmentList" class="list-group"></ul>
-    </div>
-    <div class="profile-card">
-      <h4 class="section-title">Achievements</h4>
-      <ul id="achievementList" class="list-group"></ul>
-    </div>
-    <div class="profile-card">
-      <h4 class="section-title">Interests</h4>
-      <ul id="interestList" class="list-group"></ul>
-    </div>
-    <div class="profile-card">
-      <h4 class="section-title">Skills</h4>
-      <ul id="skillList" class="list-group"></ul>
-    </div>
-
-    <div class="text-center">
-      <a href="home.html#view-profiles" class="btn btn-primary">Back to Profiles</a>
-    </div>
+  <div class="profile-section">
+    <h4>Personal Information</h4>
+    <p><strong>Name:</strong> Arpa Deb</p>
+    <p><strong>Graduation Year:</strong> 2023</p>
+    <p><strong>Department:</strong> Electrical & Computer Engineering</p>
+    <p><strong>Email:</strong> arpa.deb@abc.edu</p>
   </div>
-</section>
-
-<!-- Connect Modal -->
-<div class="modal fade" id="connectModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Connect with <span id="modalAlumniName">Alumni</span></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <form id="connectForm">
-          <div class="mb-3">
-            <label class="form-label">Subject</label>
-            <input type="text" class="form-control" id="messageSubject" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Message</label>
-            <textarea class="form-control" id="messageContent" rows="5" required></textarea>
-          </div>
-          <button type="submit" class="btn btn-connect w-100">Send Message</button>
-        </form>
-      </div>
-    </div>
+  <div class="profile-section">
+    <h4>Education History</h4>
+    <p><strong>Degree:</strong> B.Sc. in ECE</p>
+    <p><strong>Institution:</strong> North South University</p>
+    <p><strong>Start Date:</strong> 2019</p>
+    <p><strong>End Date:</strong> 2023</p>
+  </div>
+  <div class="profile-section">
+    <h4>Employment History</h4>
+    <p><strong>Job Title:</strong> Software Engineer</p>
+    <p><strong>Company:</strong> TechCorp</p>
+    <p><strong>Start Date:</strong> 2024</p>
+    <p><strong>End Date:</strong> Present</p>
+  </div>
+  <div class="profile-section">
+    <h4>Achievements</h4>
+    <p><strong>Title:</strong> Best Project Award</p>
+    <p><strong>Date:</strong> 2022</p>
+    <p><strong>Organization:</strong> NSU ECE Department</p>
+  </div>
+  <div class="text-center mt-4">
+    <a href="mentorship.html" class="btn btn-primary">Request Mentorship</a>
   </div>
 </div>
 
-<!-- Footer -->
-<footer class="footer text-center">
+<footer class="footer">
   <div class="container">
-    <p>NSU Alumni Network | Group-02</p>
-    <ul class="list-inline">
-      <li class="list-inline-item"><a href="#">Alumni Profiles</a></li>
-      <li class="list-inline-item"><a href="#">Events</a></li>
-      <li class="list-inline-item"><a href="#">Mentorship</a></li>
-      <li class="list-inline-item"><a href="#">Careers</a></li>
-      <li class="list-inline-item"><a href="#">Admin</a></li>
-      <li class="list-inline-item"><a href="#">Terms</a></li>
-      <li class="list-inline-item"><a href="#">Privacy</a></li>
-    </ul>
-    <p>© 2025 North South University. All rights reserved.</p>
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <h5>About Us</h5>
+        <p>Connect with the Alumni Relationship & Networking System to build lasting relationships.</p>
+      </div>
+      <div class="col-md-4 mb-4">
+        <h5>Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="mentorship.html">Mentorship</a></li>
+          <li><a href="#">Events</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 mb-4">
+        <h5>Contact Us</h5>
+        <p>Email: info@abc.edu</p>
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+    <hr class="bg-light">
+    <p class="text-center mb-0">&copy; 2025 ABC University. All rights reserved.</p>
   </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  const profileData = {
-      firstName: "John", lastName: "Doe", gradYear: "2015", department: "Computer Science",
-      email: "john.doe@example.com", phone: "+8801234567890", location: "Dhaka, Bangladesh",
-      photoUrl: "https://via.placeholder.com/150",
-      education: [{ degree: "BSc in Computer Science", institution: "NSU", startDate: "2011", endDate: "2015" }],
-      employment: [{ jobTitle: "Software Engineer", company: "Google", startDate: "2018", endDate: "Present" }],
-      achievements: [{ title: "Best Innovator Award", organization: "Google", date: "2020" }],
-      interests: ["AI", "Web Development"], skills: ["Java", "Python"]
-  };
-
-  function renderProfile(profile) {
-      document.querySelector('.loading-spinner').style.display = 'none';
-      document.getElementById('alumniName').textContent = `${profile.firstName} ${profile.lastName}`;
-      document.getElementById('gradYear').textContent = `Class of ${profile.gradYear}`;
-      document.getElementById('modalAlumniName').textContent = `${profile.firstName} ${profile.lastName}`;
-      document.getElementById('fullName').textContent = `${profile.firstName} ${profile.lastName}`;
-      document.getElementById('department').textContent = profile.department;
-      document.getElementById('gradYearInfo').textContent = profile.gradYear;
-      document.getElementById('email').textContent = profile.email;
-      document.getElementById('phone').textContent = profile.phone;
-      document.getElementById('location').textContent = profile.location;
-      document.getElementById('profilePhoto').src = profile.photoUrl;
-
-      const edu = profile.education.map(e => `<li class="list-group-item">${e.degree}, ${e.institution} (${e.startDate}-${e.endDate})</li>`).join('');
-      document.getElementById('educationList').innerHTML = edu || '<li class="list-group-item">No data</li>';
-
-      const emp = profile.employment.map(e => `<li class="list-group-item">${e.jobTitle}, ${e.company} (${e.startDate}-${e.endDate})</li>`).join('');
-      document.getElementById('employmentList').innerHTML = emp || '<li class="list-group-item">No data</li>';
-
-      const ach = profile.achievements.map(a => `<li class="list-group-item">${a.title}, ${a.organization} (${a.date})</li>`).join('');
-      document.getElementById('achievementList').innerHTML = ach || '<li class="list-group-item">No data</li>';
-
-      const interests = profile.interests.map(i => `<li class="list-group-item">${i}</li>`).join('');
-      document.getElementById('interestList').innerHTML = interests || '<li class="list-group-item">No data</li>';
-
-      const skills = profile.skills.map(s => `<li class="list-group-item">${s}</li>`).join('');
-      document.getElementById('skillList').innerHTML = skills || '<li class="list-group-item">No data</li>';
-  }
-
-  document.getElementById('connectForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      alert('Message sent!');
-      bootstrap.Modal.getInstance(document.getElementById('connectModal')).hide();
-      e.target.reset();
-  });
-
-  const profileId = new URLSearchParams(window.location.search).get('id');
-  if (!profileId) {
-      document.querySelector('.container').innerHTML = '<p class="text-danger text-center">Invalid profile ID.</p>';
-  } else {
-      renderProfile(profileData);
-  }
-</script>
-</body>
-</html>
