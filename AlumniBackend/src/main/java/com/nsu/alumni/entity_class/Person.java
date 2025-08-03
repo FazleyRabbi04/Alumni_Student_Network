@@ -1,75 +1,67 @@
 package com.nsu.alumni.entity_class;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter
 @Entity
 @Table(name = "person")
 public class Person {
+    // Getters and Setters
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer personId;
 
+    @Setter
     @Column(length = 50)
     private String firstName;
 
+    @Setter
     @Column(length = 50)
     private String lastName;
 
+    @Setter
     @Column(length = 100)
     private String street;
 
+    @Setter
     @Column(length = 50)
     private String city;
 
+    @Setter
     @Column(length = 10)
     private String zip;
 
+    @Setter
     @Column(length = 10, unique = true)
     private String nid;
 
+    @Setter
     @Enumerated(EnumType.STRING)
     @Column(length = 10)
     private Gender gender;
 
+    @Setter
     @Column(length = 50)
     private String department;
 
+    @Setter
     private LocalDate dateOfBirth;
 
+    @Setter
     @Column(length = 255, nullable = false)
     private String password;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<EmailAddress> emails = new HashSet<>();
+    private Set<EmailAddress> email = new HashSet<>();
 
-    // Getters and Setters
-    public Integer getPersonId() { return personId; }
-    public void setPersonId(Integer personId) { this.personId = personId; }
-    public String getFirstName() { return firstName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
-    public String getLastName() { return lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
-    public String getStreet() { return street; }
-    public void setStreet(String street) { this.street = street; }
-    public String getCity() { return city; }
-    public void setCity(String city) { this.city = city; }
-    public String getZip() { return zip; }
-    public void setZip(String zip) { this.zip = zip; }
-    public String getNid() { return nid; }
-    public void setNid(String nid) { this.nid = nid; }
-    public Gender getGender() { return gender; }
-    public void setGender(Gender gender) { this.gender = gender; }
-    public String getDepartment() { return department; }
-    public void setDepartment(String department) { this.department = department; }
-    public LocalDate getDateOfBirth() { return dateOfBirth; }
-    public void setDateOfBirth(LocalDate dateOfBirth) { this.dateOfBirth = dateOfBirth; }
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
-    public Set<EmailAddress> getEmails() { return emails; }
-    public void setEmails(Set<EmailAddress> emails) { this.emails = emails; }
+    public void setEmails(Set<EmailAddress> emails) { this.email= email; }
 
     public enum Gender {
         Male, Female, Other
