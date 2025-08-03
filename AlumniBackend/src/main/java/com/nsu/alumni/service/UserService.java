@@ -1,20 +1,12 @@
 package com.nsu.alumni.service;
+
 import com.nsu.alumni.data_transfer.SignupRequest;
-import com.nsu.alumni.entity_class.Alumni;
-import com.nsu.alumni.entity_class.EmailAddress;
-import com.nsu.alumni.entity_class.Person;
-import com.nsu.alumni.entity_class.Student;
-import com.nsu.alumni.repository.AlumniRepository;
-import com.nsu.alumni.repository.EmailAddressRepository;
-import com.nsu.alumni.repository.PersonRepository;
-import com.nsu.alumni.repository.StudentRepository;
+import com.nsu.alumni.entity_class.*;
+import com.nsu.alumni.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 public class UserService {
@@ -35,7 +27,7 @@ public class UserService {
     @Transactional
     public void registerUser(SignupRequest request) throws Exception {
         // Validate role
-        if (!request.getRole().equals("Alumni") && !request.getRole().equals("Student")) {
+        if (!request.getRole().equals("alumni") && !request.getRole().equals("student")) {
             throw new Exception("Invalid role");
         }
 
@@ -44,7 +36,7 @@ public class UserService {
             throw new Exception("Passwords do not match");
         }
 
-        // Check if email exists - use EmailAddressRepository instead
+        // Check if email exists
         if (emailAddressRepository.existsByEmail(request.getEmail())) {
             throw new Exception("Email already registered");
         }
@@ -53,43 +45,56 @@ public class UserService {
         Person person = new Person();
         person.setFirstName(request.getFirstName());
         person.setLastName(request.getLastName());
+        person.setStreet(request.getStreet());
+        person.setCity(request.getCity());
+        person.setZip(request.getZip());
+        person.setNid(request.getNID());
         person.setDepartment(request.getDepartment());
+        person.setDateOfBirth(request.getDateOfBirth());
         person.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        // Save Person first
+        // Set gender enum
+        try {
+            person.setGender(Person.Gender.valueOf(request.getGender()));
+        } catch (IllegalArgumentException e) {
+            throw new Exception("Invalid gender value");
+        }
+
+        // Save Person
         person = personRepository.save(person);
 
-        // Create EmailAddress and associate with Person
-        EmailAddress emailAddress = new EmailAddress();
-        emailAddress.setEmail(request.getEmail()); // Remove .toString() - request.getEmail() is already String
-        emailAddress.setPerson(person);
-
         // Save EmailAddress
+        EmailAddress emailAddress = new EmailAddress();
+        emailAddress.setPerson(person);
+        emailAddress.setEmail(request.getEmail());
         emailAddressRepository.save(emailAddress);
 
         // Save Alumni or Student
-        if (request.getRole().equals("Alumni")) {
-            if (request.getGradYear() == null) {
+        if (request.getRole().equals("alumni")) {
+            if (request.getGraduationYear() == null || request.getGraduationYear().isEmpty()) {
                 throw new Exception("Graduation year is required for Alumni");
             }
             Alumni alumni = new Alumni();
             alumni.setPerson(person);
-            alumni.setGradYear(request.getGradYear());
+            alumni.setGradYear(Integer.parseInt(request.getGraduationYear()));
             alumniRepository.save(alumni);
         } else {
-            if (request.getBatch() == null) {
-                throw new Exception("Batch is required for Student");
+            if (request.getBatchYear() == null || request.getBatchYear().isEmpty()) {
+                throw new Exception("Batch year is required for Student");
             }
             Student student = new Student();
             student.setPerson(person);
-            student.setBatchYear(parseBatchYear(request.getBatch())); // Parse "Spring 2025" to 2025
+            student.setBatchYear(parseBatchYear(request.getBatchYear()));
             studentRepository.save(student);
         }
     }
 
     private Integer parseBatchYear(String batch) {
-        // Extract year from "Spring 2025" or "Fall 2025"
-        String[] parts = batch.split(" ");
-        return Integer.parseInt(parts[1]);
+        // Extract year from "2021-2025" format
+        if (batch.contains("-")) {
+            String[] parts = batch.split("-");
+            return Integer.parseInt(parts[0]); // Return start year
+        }
+        return Integer.parseInt(batch);
     }
 }

@@ -57,6 +57,26 @@
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
+	<!-- Add these dependencies to your pom.xml if not already present -->
+
+	<!-- Spring Security for password encoding -->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-security</artifactId>
+	</dependency>
+
+	<!-- Validation -->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-validation</artifactId>
+	</dependency>
+
+	<!-- MySQL Connector -->
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<scope>runtime</scope>
+	</dependency>
 	<build>
 		<plugins>
 			<plugin>

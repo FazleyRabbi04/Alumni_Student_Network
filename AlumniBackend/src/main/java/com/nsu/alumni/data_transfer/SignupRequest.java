@@ -1,51 +1,61 @@
 package com.nsu.alumni.data_transfer;
 
-import com.nsu.alumni.entity_class.EmailAddress;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Set;
+import java.time.LocalDate;
 
 @Setter
+@Getter
 public class SignupRequest {
     // Getters and Setters
-    @Getter
     @NotBlank(message = "Role is required")
     private String role;
 
-    @Getter
     @NotBlank(message = "First name is required")
     @Size(min = 2, message = "First name must be at least 2 characters")
     private String firstName;
 
-    @Getter
     @NotBlank(message = "Last name is required")
     @Size(min = 2, message = "Last name must be at least 2 characters")
     private String lastName;
 
-    // Fixed: Return type should match the field type (String)
-    @Getter  // Added @Getter annotation here
+    @NotBlank(message = "Street is required")
+    private String street;
+
+    @NotBlank(message = "City is required")
+    private String city;
+
+    @NotBlank(message = "Zip is required")
+    private String zip;
+
+    @NotBlank(message = "NID is required")
+    private String NID;
+
+    @NotBlank(message = "Phone is required")
+    private String phone;
+
+    @NotBlank(message = "Gender is required")
+    private String gender;
+
+    @NotBlank(message = "Department is required")
+    private String department;
+
+    @NotNull(message = "Date of birth is required")
+    private LocalDate dateOfBirth;
+
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email format")
     private String email;
 
-    @Getter
-    @NotBlank(message = "Department is required")
-    private String department;
+    private String graduationYear; // For Alumni
+    private String batchYear; // For Student
 
-    @Getter
-    private Integer gradYear; // For Alumni
-
-    @Getter
-    private String batch; // For Student
-
-    @Getter
     @NotBlank(message = "Password is required")
     @Size(min = 8, message = "Password must be at least 8 characters")
     private String password;
 
-    @Getter
     @NotBlank(message = "Confirm password is required")
     private String confirmPassword;
 
