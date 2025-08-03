@@ -13,6 +13,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Service
 public class UserService {
     @Autowired
@@ -41,8 +44,8 @@ public class UserService {
             throw new Exception("Passwords do not match");
         }
 
-        // Check if email exists
-        if (personRepository.existsByEmail(request.getEmail())) {
+        // Check if email exists - use EmailAddressRepository instead
+        if (emailAddressRepository.existsByEmail(request.getEmail())) {
             throw new Exception("Email already registered");
         }
 
@@ -53,13 +56,15 @@ public class UserService {
         person.setDepartment(request.getDepartment());
         person.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        // Save Person
+        // Save Person first
         person = personRepository.save(person);
 
-        // Save EmailAddress
+        // Create EmailAddress and associate with Person
         EmailAddress emailAddress = new EmailAddress();
+        emailAddress.setEmail(request.getEmail()); // Remove .toString() - request.getEmail() is already String
         emailAddress.setPerson(person);
-        emailAddress.setEmail(request.getEmail());
+
+        // Save EmailAddress
         emailAddressRepository.save(emailAddress);
 
         // Save Alumni or Student
