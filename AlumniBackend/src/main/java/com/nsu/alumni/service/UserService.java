@@ -1,5 +1,13 @@
 package com.nsu.alumni.service;
-import com.nsu.alumni.*;
+import com.nsu.alumni.data_transfer.SignupRequest;
+import com.nsu.alumni.entity_class.Alumni;
+import com.nsu.alumni.entity_class.EmailAddress;
+import com.nsu.alumni.entity_class.Person;
+import com.nsu.alumni.entity_class.Student;
+import com.nsu.alumni.repository.AlumniRepository;
+import com.nsu.alumni.repository.EmailAddressRepository;
+import com.nsu.alumni.repository.PersonRepository;
+import com.nsu.alumni.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
